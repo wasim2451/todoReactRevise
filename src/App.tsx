@@ -21,7 +21,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 px-4 py-6">
+    <div className="min-h-screen bg-linear-to-br from-slate-100 to-slate-200 px-4 py-6">
       <div className="mx-auto w-full max-w-xl bg-white rounded-xl shadow-lg p-4 sm:p-6">
         <h1 className="text-xl sm:text-2xl font-bold text-center mb-6 text-slate-700">
           Todo List
@@ -57,7 +57,7 @@ function App() {
               key={index}
               className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 bg-slate-50 px-4 py-3 rounded-lg shadow-sm"
             >
-              <p className="text-slate-700 break-words">{item}</p>
+              <p className="text-slate-700 wrap-break-word">{item}</p>
               <button
                 onClick={() => handleRemove(index)}
                 className="self-end sm:self-auto text-sm px-3 py-1 rounded-md bg-red-400 text-white hover:bg-red-500 active:scale-95 transition"
