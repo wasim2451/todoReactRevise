@@ -1,58 +1,72 @@
 import "./App.css";
 import { useState } from "react";
+
 function App() {
-  //Create a Task Checker
   const [data, setData] = useState<Array<string>>([]);
   const [input, setInput] = useState<string>("");
+
   const handleAdd = (currVal: string) => {
-    setData((prev) => [...prev, currVal]);
+    if (input.trim() === "") return;
+    setData((prev) => [...prev, currVal.trim()]);
     setInput("");
-    // console.log(data);
   };
+
   const handleRemove = (i: number) => {
-    const newArr = data.filter((_, index) => index != i);
+    const newArr = data.filter((_, index) => index !== i);
     setData(newArr);
   };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
 
   return (
-    <div className="mx-[15%] my-[5%] border-2 min-h-screen">
-      <div className="flex flex-row justify-center items-center gap-[30px]">
-        <input
-          type="text"
-          className="bg-yellow-100 p-3 font-medium"
-          value={input}
-          placeholder="Enter Todo"
-          onChange={handleInputChange}
-        />
-        <div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 px-4 py-6">
+      <div className="mx-auto w-full max-w-xl bg-white rounded-xl shadow-lg p-4 sm:p-6">
+        <h1 className="text-xl sm:text-2xl font-bold text-center mb-6 text-slate-700">
+          Todo List
+        </h1>
+
+        {/* Input Section */}
+        <div className="flex flex-col sm:flex-row gap-3 mb-6">
+          <input
+            type="text"
+            value={input}
+            placeholder="Enter a task..."
+            onChange={handleInputChange}
+            className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-green-400"
+          />
           <button
-            className="p-3 bg-green-500 cursor-pointer"
             onClick={() => handleAdd(input)}
+            className="w-full sm:w-auto px-4 py-2 rounded-lg bg-green-500 text-white font-medium hover:bg-green-600 active:scale-95 transition"
           >
-            Add Todo
+            Add
           </button>
         </div>
-      </div>
-      <div>
-        {data.length == 0 && (
-          <>
-            <p className="text-center">No todos here . . . </p>
-          </>
+
+        {data.length === 0 && (
+          <p className="text-center text-slate-400 py-10">
+            No todos yet. Add something 📝
+          </p>
         )}
-        {data.map((item, index) => (
-          <div key={index} className="flex justify-center gap-4 mb-[20px]">
-            <p>{item}</p>
-            <button
-              className="bg-red-400 p-3 cursor-pointer"
-              onClick={() => handleRemove(index)}
+
+        {/* Todo List */}
+        <div className="space-y-3">
+          {data.map((item, index) => (
+            <div
+              key={index}
+              className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 bg-slate-50 px-4 py-3 rounded-lg shadow-sm"
             >
-              Delete Button
-            </button>
-          </div>
-        ))}
+              <p className="text-slate-700 break-words">{item}</p>
+              <button
+                onClick={() => handleRemove(index)}
+                className="self-end sm:self-auto text-sm px-3 py-1 rounded-md bg-red-400 text-white hover:bg-red-500 active:scale-95 transition"
+              >
+                Delete
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
